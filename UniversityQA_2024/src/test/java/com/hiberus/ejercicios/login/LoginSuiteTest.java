@@ -4,7 +4,9 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -30,36 +32,79 @@ public class LoginSuiteTest {
     }
 
     @Test
-    public void loginTest() {
-        /* Abrir una página web */
-        driver.get("https://www.marca.com");
+    public void loginTest() throws InterruptedException {
 
-        /* Recoger el título de la página web */
-        String title = driver.getTitle();
-        System.out.println("-- getTitle --");
-        System.out.println(title);
+        // 1. Ir a la página https://www.saucedemo.com
 
-        /* Recoger la URL de la página */
-        String url = driver.getCurrentUrl();
-        System.out.println("-- getCurrentUrl");
-        System.out.println(url);
+        driver.get("https://www.saucedemo.com");
 
-        /* Recoge el HTML de la página web */
-        String pageSource = driver.getPageSource();
-        System.out.println("-- getPageSource");
-        System.out.println(pageSource);
+        // 2. Escribir el username standard_user
 
+        WebElement inputUsername = driver.findElement(By.id("user-name"));
+        inputUsername.sendKeys("standard_user");
+
+        // 3. Escribir el password secret_sauce
+
+        WebElement inputPassword = driver.findElement(By.id("password"));
+        inputPassword.sendKeys("secret_sauce");
+
+        // 4. Pulsar en el botón del Login.
+
+        WebElement buttonLogin = driver.findElement(By.id("login-button"));
+        buttonLogin.click();
+
+        // 5. Validar que hemos accedido correctamente a la página, comprobando que se muestra la URL https://www.saucedemo.com/inventory.html
+
+        String currentUrl = driver.getCurrentUrl();
+        String expectedUrl = "https://www.saucedemo.com/inventory.html";
+        if (currentUrl.equals(expectedUrl)) {
+            System.out.println("PRUEBA VALIDA");
+        } else {
+            System.out.println("** PRUEBA INVALIDA **");
+            System.out.println("Valor actual: " + currentUrl);
+            System.out.println("Resultado esperado: " + expectedUrl);
+        }
     }
 
     @Test
     public void loginIncorrectTest() {
 
+        // 1. Ir a la página https://www.saucedemo.com
 
+        driver.get("https://www.saucedemo.com");
+
+        // 2. Escribir el username standard_use (Introducimos mal el usuario para forzar el error)
+
+        WebElement inputUsername = driver.findElement(By.id("user-name"));
+        inputUsername.sendKeys("standard_use");
+
+        // 3. Escribir el password secret_sauce
+
+        WebElement inputPassword = driver.findElement(By.id("password"));
+        inputPassword.sendKeys("secret_sauce");
+
+        // 4. Pulsar en el botón del Login
+
+        WebElement buttonLogin = driver.findElement(By.id("login-button"));
+        buttonLogin.click();
+
+        // 5. Validar que aparece el mensaje de error.
+
+        WebElement errorMessage = driver.findElement(By.xpath("//h3[@data-test='error']"));
+        Boolean errorMessageIsEnabled = errorMessage.isEnabled();
+
+        if (errorMessageIsEnabled) {
+            System.out.println("PRUEBA VALIDA");
+        } else {
+            System.out.println("** PRUEBA INVALIDA **");
+            System.out.println("Valor actual: " + errorMessageIsEnabled);
+            System.out.println("Resultado esperado: " + Boolean.TRUE);
+        }
     }
 
     @After
     public void tearDown() {
-        driver.close();
+        //driver.close();
     }
 
 }
