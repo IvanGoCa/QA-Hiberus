@@ -2,14 +2,14 @@ package com.hiberus.ejercicios.login;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class LoginSuiteTest {
@@ -57,13 +57,7 @@ public class LoginSuiteTest {
 
         String currentUrl = driver.getCurrentUrl();
         String expectedUrl = "https://www.saucedemo.com/inventory.html";
-        if (currentUrl.equals(expectedUrl)) {
-            System.out.println("PRUEBA VALIDA");
-        } else {
-            System.out.println("** PRUEBA INVALIDA **");
-            System.out.println("Valor actual: " + currentUrl);
-            System.out.println("Resultado esperado: " + expectedUrl);
-        }
+        Assert.assertEquals("El valor actual es: " + currentUrl + "; El valor esperado es: " + expectedUrl, expectedUrl, currentUrl);
     }
 
     @Test
@@ -89,22 +83,53 @@ public class LoginSuiteTest {
         buttonLogin.click();
 
         // 5. Validar que aparece el mensaje de error.
-
-        WebElement errorMessage = driver.findElement(By.xpath("//h3[@data-test='error']"));
-        Boolean errorMessageIsEnabled = errorMessage.isEnabled();
-
-        if (errorMessageIsEnabled) {
-            System.out.println("PRUEBA VALIDA");
-        } else {
-            System.out.println("** PRUEBA INVALIDA **");
-            System.out.println("Valor actual: " + errorMessageIsEnabled);
-            System.out.println("Resultado esperado: " + Boolean.TRUE);
+        WebElement errorMessage = null;
+        Boolean errorMessageIsEnabled = null;
+        try {
+            errorMessage = driver.findElement(By.xpath("//h3[@data-test='error']"));
+            errorMessageIsEnabled = errorMessage.isDisplayed();
+        } catch (NoSuchElementException e) {
+            errorMessageIsEnabled = Boolean.FALSE;
         }
+
+        Assert.assertTrue("EL MENSAJE DE ERROR NO APARECE", errorMessageIsEnabled);
+    }
+
+    @Test
+    public void assertArrayEquals() {
+        String[] nombresEsperados = {"A", "B", "C"};
+        String[] nombresActuales = {"A", "B", "C"};
+        Assert.assertArrayEquals("** MAL **", nombresEsperados, nombresActuales);
+    }
+
+    @Test
+    public void assertEquals() {
+        Assert.assertEquals("** MAL **", "A", "A");
+    }
+
+    @Test
+    public void assertFalse() {
+        Assert.assertFalse("** MAL **", Boolean.FALSE);
+    }
+
+    @Test
+    public void assertTrue() {
+        Assert.assertTrue("** MAL **", Boolean.TRUE);
+    }
+
+    @Test
+    public void assertNotNull() {
+        Assert.assertNotNull("** MAL **", "HOLA");
+    }
+
+    @Test
+    public void assertNull() {
+        Assert.assertNull("** MAL **", null);
     }
 
     @After
     public void tearDown() {
-        //driver.close();
+        driver.close();
     }
 
 }
