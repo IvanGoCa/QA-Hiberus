@@ -223,7 +223,7 @@ public class InventorySuiteTest {
         for (int i = 0; i < 3 && listItems.size() > 0; i++) {
             int randomIndex = random.nextInt(listItems.size());
             WebElement randomItem = listItems.get(randomIndex);
-            WebElement button = randomItem.findElement(By.xpath(".//button"));
+            WebElement button = randomItem.findElement(By.xpath(".//button[contains(@id, 'add-to-cart')]"));
             button.click();
             listItems.remove(randomIndex);
         }
@@ -266,8 +266,8 @@ public class InventorySuiteTest {
         buttonLogin.click();
 
         // 5. Seleccionar el filtro NAME (Z TO A)
-        List<WebElement> itemsAZ = driver.findElements(By.className("inventory_item"));
-        Collections.reverse(itemsAZ);
+        List<WebElement> expectedItemsAZ = driver.findElements(By.className("inventory_item"));
+        Collections.reverse(expectedItemsAZ);
 
         WebElement select = driver.findElement(By.xpath("//select[@class='product_sort_container' and @data-test='product_sort_container']"));
         select.click();
@@ -276,9 +276,9 @@ public class InventorySuiteTest {
         // 6. Validar que el filtro seleccionado, ordena por el orden alfabético de la Z a la A
         /* La idea es recoger el listado de los 6 items y comprobarlos cuando se recojan al reves que son los mismos
         Por lo que habrá que hacer la búsqueda 2 veces, antes y después */
-        List<WebElement> itemsZA = driver.findElements(By.className("inventory_item"));
+        List<WebElement> actualItemsZA = driver.findElements(By.className("inventory_item"));
 
-        Assert.assertEquals("LOS ITEMS ORDENADOS DE Z-A NO COINCIDEN CON LOS DE A-Z", itemsAZ, itemsZA);
+        Assert.assertEquals("LOS ITEMS ORDENADOS DE Z-A NO COINCIDEN CON LOS DE A-Z", expectedItemsAZ, actualItemsZA);
     }
 
     @Test
@@ -318,6 +318,56 @@ public class InventorySuiteTest {
                     Float currentPrice = Float.parseFloat(itemsPrize.get(i).getText().replaceAll("\\$", ""));
                     Float nextPrice = Float.parseFloat(itemsPrize.get(i + 1).getText().replaceAll("\\$", ""));
                     if (currentPrice > nextPrice) {
+                        pricesInOrder = Boolean.FALSE;
+                    }
+                }
+            } else {
+                System.out.println("No hay suficientes elementos para comparar los precios.");
+            }
+        } catch(NoSuchElementException e) {
+            System.out.println("NO SE HA ENCONTRADO EL ELEMENTO:\n" + e.getMessage());
+        }
+
+        Assert.assertTrue("LOS PRECIOS NO ESTAN ORDENADOS DE MENOR A MAYOR", pricesInOrder);
+    }
+
+    @Test
+    public void orderInventoryByPriceGreaterToSmaller() {
+        // 1. Ir a la página https://www.saucedemo.com
+
+        driver.get("https://www.saucedemo.com");
+
+        // 2. Escribir el username standard_user
+
+        WebElement inputUsername = driver.findElement(By.id("user-name"));
+        inputUsername.sendKeys("standard_user");
+
+        // 3. Escribir el password secret_sauce
+
+        WebElement inputPassword = driver.findElement(By.id("password"));
+        inputPassword.sendKeys("secret_sauce");
+
+        // 4. Pulsar en el botón del Login.
+
+        WebElement buttonLogin = driver.findElement(By.id("login-button"));
+        buttonLogin.click();
+
+        // 5. Seleccionar el filtro PRICE (high to low)
+        WebElement select = driver.findElement(By.xpath("//select[@class='product_sort_container' and @data-test='product_sort_container']"));
+        select.click();
+        WebElement priceOption = driver.findElement((By.xpath("//select[@class='product_sort_container' and @data-test='product_sort_container']//child::option[@value='hilo']")));
+        priceOption.click();
+
+        // 6. Validar que el filtro seleccionado, ordena por el orden de precio de mayor a menor
+        List<WebElement> itemsPrize = driver.findElements(By.xpath("//div[@class='inventory_item_price']"));
+
+        Boolean pricesInOrder = Boolean.TRUE;
+        try {
+            if (itemsPrize.size() >= 2) {
+                for (int i = 0; i < itemsPrize.size() - 1 && pricesInOrder; i++) {
+                    Float currentPrice = Float.parseFloat(itemsPrize.get(i).getText().replaceAll("\\$", ""));
+                    Float nextPrice = Float.parseFloat(itemsPrize.get(i + 1).getText().replaceAll("\\$", ""));
+                    if (currentPrice < nextPrice) {
                         pricesInOrder = Boolean.FALSE;
                     }
                 }
