@@ -2,26 +2,38 @@ package com.hiberus.university.selenium.pages;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import java.util.List;
 
 @Getter
 @Setter
 public class CheckoutPage extends BasePage {
 
     @FindBy(id = "first-name")
-    WebElement inputFirstName;
+    private WebElement inputFirstName;
 
     @FindBy(id = "last-name")
-    WebElement inputLastName;
+    private WebElement inputLastName;
 
     @FindBy(id = "postal-code")
-    WebElement inputZipCode;
+    private WebElement inputZipCode;
 
     @FindBy(id = "continue")
-    WebElement continueButton;
+    private WebElement continueButton;
+
+    @FindBy(xpath = "//div[contains(text(), 'Item total: $')]")
+    private WebElement itemTotal;
+
+    @FindBy(xpath = "//button[contains(text(), 'Finish')]")
+    private WebElement finishButton;
+
+    @FindBy(xpath = "//div[@class='complete-text']")
+    private WebElement finalMessage;
 
     //Constructor
     public CheckoutPage(WebDriver driver) {
@@ -51,5 +63,22 @@ public class CheckoutPage extends BasePage {
         writeLastName(lastName);
         writeZipCode(zipCode);
         clickContinue();
+    }
+
+    public Float getExpectedPrize() {
+        return CartPage.totalPrize;
+    }
+
+    public Float getActualPrize() {
+        String prize = getItemTotal().getText().replaceAll("Item total: \\$", "");
+        return Float.parseFloat(prize);
+    }
+
+    public void clickFinish() {
+        click(getFinishButton());
+    }
+
+    public String getActualMessage() {
+        return getFinalMessage().getText();
     }
 }

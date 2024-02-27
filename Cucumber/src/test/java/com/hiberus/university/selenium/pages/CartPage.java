@@ -16,15 +16,17 @@ import java.util.Random;
 @Setter
 public class CartPage extends BasePage {
 
+    public static Float totalPrize = 0F;
+
     @FindBy(xpath = "//div[@class='cart_list']//child::div[@class='cart_item']")
-    List<WebElement> items;
+    private static List<WebElement> items;
 
     @FindBy(id = "checkout")
-    WebElement checkoutButton;
+    private WebElement checkoutButton;
 
-    List<WebElement> itemsCopy;
+    private List<WebElement> itemsCopy;
 
-    WebElement removedItem;
+    private WebElement removedItem;
 
     //Constructor
     public CartPage(WebDriver driver) {
@@ -34,7 +36,7 @@ public class CartPage extends BasePage {
 
     //Actions
     public void deleteOneProduct() {
-        this.itemsCopy = new ArrayList<>(getItems());
+        this.itemsCopy = new ArrayList<>(items);
 
         Random random = new Random();
         int randomIndex = random.nextInt(itemsCopy.size());
@@ -46,8 +48,8 @@ public class CartPage extends BasePage {
     }
 
     public Boolean checkIfProductIsDeleted() {
-        Boolean removed = Boolean.TRUE;
-        for (WebElement item : getItems()) {
+        boolean removed = Boolean.TRUE;
+        for (WebElement item : items) {
             if (item.equals(removedItem)) {
                 removed = Boolean.FALSE;
                 break;
@@ -58,6 +60,15 @@ public class CartPage extends BasePage {
     }
 
     public void clickCheckout() {
+        totalPrize();
         click(getCheckoutButton());
+    }
+
+    public void totalPrize() {
+        for (WebElement item : items) {
+            WebElement prize = item.findElement(By.xpath(".//child::div[@class='inventory_item_price']"));
+            float prizeFloat = Float.parseFloat(prize.getText().replaceAll("\\$", ""));
+            totalPrize += prizeFloat;
+        }
     }
 }
