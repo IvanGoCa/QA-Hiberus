@@ -1,0 +1,7 @@
+-------------------------------------------------------------------------------
+Test set: com.vueling.runner.CucumberRunnerTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 31.144 s <<< FAILURE! - in com.vueling.runner.CucumberRunnerTest
+(Automate Vueling's ticket selling web)  Time elapsed: 28.894 s  <<< ERROR!
+java.lang.IndexOutOfBoundsException: Index: 6, Size: 0
+
