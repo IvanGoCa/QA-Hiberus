@@ -68,6 +68,12 @@ public class InventoryPageSteps {
         inventoryPage.clickCart();
     }
 
+    @When("cierro sesion desde el inventario")
+    public void hago_click_en_la_hamburguesa() {
+        initialize();
+        inventoryPage.doLogout();
+    }
+
     @Then("valido que el numero de productos mostrados es igual a {string}")
     public void valido_que_el_numero_de_productos_mostrados_es_igual_a(String number) {
         initialize();

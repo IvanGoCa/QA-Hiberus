@@ -19,4 +19,3 @@ Feature: Validar funcionalidad checkout
     And relleno los datos FirstName "Ivan" LastName "Gomez" Zip "43900"
     And finalizo el checkout
     Then valido que el mensaje es "Your order has been dispatched, and will arrive just as fast as the pony can get there!"
-

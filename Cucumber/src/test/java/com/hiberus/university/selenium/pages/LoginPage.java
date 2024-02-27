@@ -11,7 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 @Setter
 public class LoginPage extends BasePage {
 
-    public static final String PAGE_URL = "https://www.saucedemo.com";
+    public static final String PAGE_URL = "https://www.saucedemo.com/";
 
     /* WebElements */
     @FindBy(id = "user-name")
@@ -49,6 +49,10 @@ public class LoginPage extends BasePage {
         writeUsername(username);
         writePassword(password);
         clickLoginButton();
+    }
+
+    public String getPageUrl(){
+        return getDriver().getCurrentUrl();
     }
 
     public Boolean isErrorMessageDisplayed() {

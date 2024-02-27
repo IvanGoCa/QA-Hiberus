@@ -33,6 +33,12 @@ public class InventoryPage extends BasePage {
     @FindBy(xpath = "//a[@class='shopping_cart_link']")
     private WebElement cart;
 
+    @FindBy(id = "react-burger-menu-btn")
+    private WebElement hamburguerButton;
+
+    @FindBy(id = "logout_sidebar_link")
+    private WebElement logoutButton;
+
     //CONSTRUCTOR
     public InventoryPage(WebDriver driver) {
         super(driver);
@@ -171,5 +177,17 @@ public class InventoryPage extends BasePage {
 
     public void clickCart() {
         click(getCart());
+    }
+
+    public void clickHamburguer() {
+        click(getHamburguerButton());
+    }
+    public void clickLogout() {
+        click(getLogoutButton());
+    }
+
+    public void doLogout() {
+        clickHamburguer();
+        clickLogout();
     }
 }

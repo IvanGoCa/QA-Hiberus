@@ -29,4 +29,15 @@ public class LoginPageSteps {
 
         Assert.assertTrue("No se ha mostrado el mensaje de error", loginPage.isErrorMessageDisplayed());
     }
+
+    @Then("la app me redirige a la pagina de login")
+    public void la_app_me_redirige_a_la_pagina_de_login() {
+        PagesFactory pf = PagesFactory.getInstance();
+        LoginPage loginPage = pf.getLoginPage();
+
+        String expectedURL = LoginPage.PAGE_URL;
+        String actualURL = loginPage.getPageUrl();
+
+        Assert.assertEquals("La pagina no es la de login", expectedURL, actualURL);
+    }
 }
