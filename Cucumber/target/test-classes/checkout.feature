@@ -9,7 +9,7 @@ Feature: Validar funcionalidad checkout
     And anado al carrito "3" productos
     And hago click en el boton del carrito
     And presiono en el boton de checkout
-    And relleno los datos FirstName "Ivan" LastName "Gomez" Zip "43900"
+    When relleno los datos FirstName "Ivan" LastName "Gomez" Zip "43900"
     Then valido que el precio total del pedido es el correcto
 
   Scenario: Validar realizar un pedidio
@@ -17,5 +17,5 @@ Feature: Validar funcionalidad checkout
     And hago click en el boton del carrito
     And presiono en el boton de checkout
     And relleno los datos FirstName "Ivan" LastName "Gomez" Zip "43900"
-    And finalizo el checkout
+    When finalizo el checkout
     Then valido que el mensaje es "Your order has been dispatched, and will arrive just as fast as the pony can get there!"

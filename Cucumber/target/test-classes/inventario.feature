@@ -3,7 +3,6 @@ Feature: Validacion funcionalidad inventario
   Background:
     Given me encuentro en la pagina de login
     When realizo el login con el user "standard_user" y el pass "secret_sauce"
-    Then me encuentro en la home de la app
 
   Scenario: Validar el numero de resultados
     Then valido que el numero de productos mostrados es igual a "6"

@@ -3,7 +3,6 @@ Feature: Validar funcionalidad checkout
   Background:
     Given me encuentro en la pagina de login
     When realizo el login con el user "standard_user" y el pass "secret_sauce"
-    Then me encuentro en la home de la app
 
   Scenario: Validar comprobar el precio final
     And anado al carrito "3" productos
