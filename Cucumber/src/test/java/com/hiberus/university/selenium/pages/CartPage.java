@@ -16,8 +16,6 @@ import java.util.Random;
 @Setter
 public class CartPage extends BasePage {
 
-    public static Float totalPrize = 0F;
-
     @FindBy(xpath = "//div[@class='cart_list']//child::div[@class='cart_item']")
     private static List<WebElement> items;
 
@@ -60,15 +58,6 @@ public class CartPage extends BasePage {
     }
 
     public void clickCheckout() {
-        totalPrize();
         click(getCheckoutButton());
-    }
-
-    public void totalPrize() {
-        for (WebElement item : items) {
-            WebElement prize = item.findElement(By.xpath(".//child::div[@class='inventory_item_price']"));
-            float prizeFloat = Float.parseFloat(prize.getText().replaceAll("\\$", ""));
-            totalPrize += prizeFloat;
-        }
     }
 }

@@ -21,6 +21,8 @@ public class InventoryPage extends BasePage {
 
     public static final String INVENTORY_URL = "https://www.saucedemo.com/inventory.html";
 
+    public static Float totalPrize = 0F;
+
     @FindBy(className = "inventory_item")
     private List<WebElement> inventoryItems;
 
@@ -105,6 +107,8 @@ public class InventoryPage extends BasePage {
             WebElement randomItem = inventoryItemsCopy.get(randomIndex);
             WebElement button = randomItem.findElement(By.xpath(".//button[contains(@id, 'add-to-cart')]"));
             button.click();
+            String prize = randomItem.findElement(By.xpath(".//div[@class='inventory_item_price' and contains(text(), '$')]")).getText().replaceAll("\\$", "");
+            totalPrize += Float.parseFloat(prize);
             inventoryItemsCopy.remove(randomIndex);
         }
     }

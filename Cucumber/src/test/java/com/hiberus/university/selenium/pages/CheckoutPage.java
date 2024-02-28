@@ -66,7 +66,7 @@ public class CheckoutPage extends BasePage {
     }
 
     public Float getExpectedPrize() {
-        return CartPage.totalPrize;
+        return InventoryPage.totalPrize;
     }
 
     public Float getActualPrize() {
