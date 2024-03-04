@@ -1,0 +1,7 @@
+com\hiberus\university\selenium\runner\CucumberRunnerTest.class
+com\hiberus\university\selenium\pages\BasePage.class
+com\hiberus\university\selenium\support\Hooks.class
+com\hiberus\university\selenium\utils\Flags.class
+com\hiberus\university\selenium\pages\PagesFactory.class
+com\hiberus\university\selenium\utils\MyFluentWait.class
+com\hiberus\university\selenium\model\InventoryItem.class

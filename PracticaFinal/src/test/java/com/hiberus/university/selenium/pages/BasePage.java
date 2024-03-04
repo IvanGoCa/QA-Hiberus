@@ -3,10 +3,7 @@ package com.hiberus.university.selenium.pages;
 import com.hiberus.university.selenium.utils.MyFluentWait;
 import java.time.temporal.ChronoUnit;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.ScriptTimeoutException;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Wait;
 
 @Slf4j
@@ -42,4 +39,6 @@ public class BasePage {
       }
     }
   }
+
+  public void click(WebElement webElement) {webElement.click();}
 }
