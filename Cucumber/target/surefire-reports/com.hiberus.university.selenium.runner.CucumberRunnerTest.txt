@@ -1,0 +1,7 @@
+-------------------------------------------------------------------------------
+Test set: com.hiberus.university.selenium.runner.CucumberRunnerTest
+-------------------------------------------------------------------------------
+Tests run: 19, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 66.271 s <<< FAILURE! - in com.hiberus.university.selenium.runner.CucumberRunnerTest
+Validar comprobar el precio final(Validar funcionalidad checkout)  Time elapsed: 2.351 s  <<< FAILURE!
+java.lang.AssertionError: Los precios no coinciden expected:<119.95> but was:<73.97>
+

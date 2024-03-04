@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.tablesorter.min.js"></script>
+<script src="js/Chart.min.js"></script>
+<script src="js/moment.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
+<link rel="stylesheet" href="css/cucumber.css" type="text/css"/>
+<link rel="stylesheet" href="css/font-awesome.min.css"/>
+<link rel="shortcut icon" href="images/favicon.png"/>
+
+<script>
+$(document).ready(function() {
+    // this will tell tablesorter to try looking for the data-value attribute
+    // if present, it'll sort by that instead
+    // otherwise, it'll sort by the text content of the table cell
+    $("#tablesorter").tablesorter({
+        textAttribute: 'data-value',
+        // ignores the first row of the header, the 'scenario', 'steps', since
+        // sorting those doesn't make sense
+        selectorHeaders: '> thead tr:not(.dont-sort) th',
+        // use a stable sort
+        sortStable: true
+    });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<title>Cucumber Reports (no 1) - Steps Overview</title>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navigation">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse">
+      <p class="navbar-text navbar-left">Cucumber Report</p>
+      <ul class="nav navbar-nav navbar-right">
+        <li role="presentation" ><a href="overview-features.html">Features</a></li>
+        <li role="presentation" ><a href="overview-tags.html">Tags</a></li>
+        <li role="presentation"     class="active" ><a href="overview-steps.html">Steps</a></li>
+        <li role="presentation" ><a href="overview-failures.html">Failures</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div class="container-fluid">
+  <div class="col-md-5 col-md-offset-1">
+
+<table class="table table-bordered" id="build-info">
+  <thead>
+    <tr>
+      <th>Project</th>
+        <th>Number</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="info">
+      <td>saucedemo test project</td>
+        <td>1</td>
+      <td>28 Feb 2024, 19:08</td>
+    </tr>
+  </tbody>
+</table>
+
+  </div>
+  <div class="col-md-3 col-md-offset-2">
+  </div>
+</div>
+
+
+<div id="report-lead" class="container-fluid">
+  <div class="col-md-10 col-md-offset-1">
+    <h2>Steps Statistics</h2>
+      <p>The following graph shows step statistics for this build. Below list is based on results.
+ step does not provide information about result then is not listed below.
+ Additionally @Before and @After are not counted because they are part of the scenarios, not steps.</p>
+  </div>
+</div>
+
+<div class="container-fluid" id="report">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <table id="tablesorter" class="stats-table table-hover">
+
+        <thead>
+          <tr class="header">
+            <th>Implementation</th>
+            <th>Occurrences</th>
+            <th>Average duration</th>
+            <th>Max duration</th>
+            <th>Total durations</th>
+            <th>Ratio</th>
+          </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.CartPageSteps.elimino_un_producto_de_la_lista()</td>
+              <td>1</td>
+              <td class="duration" data-value="66638300">0.066</td>
+              <td class="duration" data-value="66638300">0.066</td>
+              <td class="duration" data-value="66638300">0.066</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.CartPageSteps.presiono_en_el_boton_de_checkout()</td>
+              <td>2</td>
+              <td class="duration" data-value="52842800">0.052</td>
+              <td class="duration" data-value="52842800">0.053</td>
+              <td class="duration" data-value="105685600">0.105</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.CartPageSteps.valido_que_desaparece_de_la_lista()</td>
+              <td>1</td>
+              <td class="duration" data-value="11097200">0.011</td>
+              <td class="duration" data-value="11097200">0.011</td>
+              <td class="duration" data-value="11097200">0.011</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.CheckoutPageSteps.finalizo_el_checkout()</td>
+              <td>1</td>
+              <td class="duration" data-value="44903700">0.044</td>
+              <td class="duration" data-value="44903700">0.044</td>
+              <td class="duration" data-value="44903700">0.044</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.CheckoutPageSteps.relleno_los_datos_first_name_last_name_zip(java.lang.String,java.lang.String,java.lang.String)</td>
+              <td>2</td>
+              <td class="duration" data-value="244428800">0.244</td>
+              <td class="duration" data-value="244428800">0.248</td>
+              <td class="duration" data-value="488857600">0.488</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.CheckoutPageSteps.valido_que_el_mensaje_es(java.lang.String)</td>
+              <td>1</td>
+              <td class="duration" data-value="19589500">0.019</td>
+              <td class="duration" data-value="19589500">0.019</td>
+              <td class="duration" data-value="19589500">0.019</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.CheckoutPageSteps.valido_que_el_precio_total_del_pedido_es_el_correcto()</td>
+              <td>1</td>
+              <td class="duration" data-value="20161800">0.020</td>
+              <td class="duration" data-value="20161800">0.020</td>
+              <td class="duration" data-value="20161800">0.020</td>
+              <td class="failed">0.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.InventoryPageSteps.anado_al_carrito_el_producto(java.lang.String)</td>
+              <td>4</td>
+              <td class="duration" data-value="189634825">0.189</td>
+              <td class="duration" data-value="189634825">0.205</td>
+              <td class="duration" data-value="758539300">0.758</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.InventoryPageSteps.anado_al_carrito_productos(java.lang.String)</td>
+              <td>4</td>
+              <td class="duration" data-value="208671975">0.208</td>
+              <td class="duration" data-value="208671975">0.228</td>
+              <td class="duration" data-value="834687900">0.834</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.InventoryPageSteps.elimino_el_producto(java.lang.String)</td>
+              <td>1</td>
+              <td class="duration" data-value="141411500">0.141</td>
+              <td class="duration" data-value="141411500">0.141</td>
+              <td class="duration" data-value="141411500">0.141</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.InventoryPageSteps.hago_click_en_el_boton_del_carrito()</td>
+              <td>3</td>
+              <td class="duration" data-value="56657933">0.056</td>
+              <td class="duration" data-value="56657933">0.070</td>
+              <td class="duration" data-value="169973800">0.169</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.InventoryPageSteps.hago_click_en_la_hamburguesa()</td>
+              <td>1</td>
+              <td class="duration" data-value="240828300">0.240</td>
+              <td class="duration" data-value="240828300">0.240</td>
+              <td class="duration" data-value="240828300">0.240</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.InventoryPageSteps.me_encuentro_en_la_home_de_la_app()</td>
+              <td>2</td>
+              <td class="duration" data-value="7795150">0.007</td>
+              <td class="duration" data-value="7795150">0.009</td>
+              <td class="duration" data-value="15590300">0.015</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.InventoryPageSteps.selecciono_el_filtro_mayor_a_menor()</td>
+              <td>1</td>
+              <td class="duration" data-value="160540900">0.160</td>
+              <td class="duration" data-value="160540900">0.160</td>
+              <td class="duration" data-value="160540900">0.160</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.InventoryPageSteps.selecciono_el_filtro_menor_a_mayor()</td>
+              <td>1</td>
+              <td class="duration" data-value="158403400">0.158</td>
+              <td class="duration" data-value="158403400">0.158</td>
+              <td class="duration" data-value="158403400">0.158</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.InventoryPageSteps.selecciono_el_filtro_z_a()</td>
+              <td>1</td>
+              <td class="duration" data-value="170673800">0.170</td>
+              <td class="duration" data-value="170673800">0.170</td>
+              <td class="duration" data-value="170673800">0.170</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.InventoryPageSteps.valido_que_el_numero_de_productos_mostrados_es_igual_a(java.lang.String)</td>
+              <td>1</td>
+              <td class="duration" data-value="15749500">0.015</td>
+              <td class="duration" data-value="15749500">0.015</td>
+              <td class="duration" data-value="15749500">0.015</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.InventoryPageSteps.valido_que_el_producto_esta_en_el_inventario(java.lang.String)</td>
+              <td>3</td>
+              <td class="duration" data-value="173838466">0.173</td>
+              <td class="duration" data-value="173838466">0.183</td>
+              <td class="duration" data-value="521515400">0.521</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.InventoryPageSteps.valido_que_el_producto_no_se_encuentra_en_el_carrito()</td>
+              <td>1</td>
+              <td class="duration" data-value="30070246700">30.070</td>
+              <td class="duration" data-value="30070246700">30.070</td>
+              <td class="duration" data-value="30070246700">30.070</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.InventoryPageSteps.valido_que_hay_productos_en_el_carrito(java.lang.String)</td>
+              <td>4</td>
+              <td class="duration" data-value="17138975">0.017</td>
+              <td class="duration" data-value="17138975">0.022</td>
+              <td class="duration" data-value="68555900">0.068</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.InventoryPageSteps.valido_que_los_resultados_van_de_precio_mayor_a_menor()</td>
+              <td>1</td>
+              <td class="duration" data-value="104489100">0.104</td>
+              <td class="duration" data-value="104489100">0.104</td>
+              <td class="duration" data-value="104489100">0.104</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.InventoryPageSteps.valido_que_los_resultados_van_de_precio_menor_a_mayor()</td>
+              <td>1</td>
+              <td class="duration" data-value="112318200">0.112</td>
+              <td class="duration" data-value="112318200">0.112</td>
+              <td class="duration" data-value="112318200">0.112</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.InventoryPageSteps.valido_que_los_resultados_van_en_orden_inverso_al_alfabeto()</td>
+              <td>1</td>
+              <td class="duration" data-value="115971800">0.115</td>
+              <td class="duration" data-value="115971800">0.115</td>
+              <td class="duration" data-value="115971800">0.115</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.LoginPageSteps.la_app_me_redirige_a_la_pagina_de_login()</td>
+              <td>1</td>
+              <td class="duration" data-value="6284800">0.006</td>
+              <td class="duration" data-value="6284800">0.006</td>
+              <td class="duration" data-value="6284800">0.006</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.LoginPageSteps.me_encuentro_en_la_pagina_de_login()</td>
+              <td>19</td>
+              <td class="duration" data-value="298419342">0.298</td>
+              <td class="duration" data-value="298419342">0.648</td>
+              <td class="duration" data-value="5669967500">5.669</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.LoginPageSteps.realizo_el_login_con_el_user_y_el_pass(java.lang.String,java.lang.String)</td>
+              <td>19</td>
+              <td class="duration" data-value="308912515">0.308</td>
+              <td class="duration" data-value="308912515">0.360</td>
+              <td class="duration" data-value="5869337800">5.869</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.stepdefs.LoginPageSteps.visualizo_el_mensaje_de_error()</td>
+              <td>1</td>
+              <td class="duration" data-value="31542300">0.031</td>
+              <td class="duration" data-value="31542300">0.031</td>
+              <td class="duration" data-value="31542300">0.031</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.support.Hooks.after(io.cucumber.java.Scenario)</td>
+              <td>19</td>
+              <td class="duration" data-value="109591910">0.109</td>
+              <td class="duration" data-value="109591910">0.240</td>
+              <td class="duration" data-value="2082246300">2.082</td>
+              <td class="passed">100.00%</td>
+            </tr>
+            <tr>
+              <td class="location">com.hiberus.university.selenium.support.Hooks.before(io.cucumber.java.Scenario)</td>
+              <td>19</td>
+              <td class="duration" data-value="901277831">0.901</td>
+              <td class="duration" data-value="901277831">1.941</td>
+              <td class="duration" data-value="17124278800">17.124</td>
+              <td class="passed">100.00%</td>
+            </tr>
+        </tbody>
+
+        <tfoot class="total">
+          <tr>
+            <td>29</td>
+            <td>117</td>
+            <td class="duration">0.557</td>
+            <td class="duration">30.070</td>
+            <td class="duration">1:5.200</td>
+            <td>Totals</td>
+          </tr>
+        </tfoot>
+
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<nav class="navbar navbar-default" id="footer">
+  <div class="container-fluid">
+    <p class="navbar-text navbar-right">
+        <small>generate Cucumber HTML reports via:&nbsp;</small>
+        <a class="navbar-link" href="https://github.com/jenkinsci/cucumber-reports-plugin">Jenkins Plugin</a> |
+        <a class="navbar-link" href="https://github.com/damianszczepanik/cucumber-reporting">Standalone</a> |
+        <a class="navbar-link" href="https://github.com/damianszczepanik/cucumber-sandwich">Sandwich</a> |
+        <a class="navbar-link" href="https://github.com/damianszczepanik/maven-cucumber-reporting">Maven</a>
+        &nbsp;&nbsp;
+    </p>
+  </div>
+</nav>
+
+</body>
+</html>
