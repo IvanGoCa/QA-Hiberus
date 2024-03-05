@@ -16,7 +16,7 @@ Feature: Verificar el funcionamiento de los productos destacados
       | Apple Cinema 30\\" |
       | Canon EOS 5D       |
 
-  Scenario: Validar que un producto se añade al carrito
+  Scenario: Validar que un producto se anade al carrito
     When anado el producto "<product>" al carrito
     And hago click en el boton de carrito negro
     Then compruebo que en el carrito hay "1" elementos
@@ -28,7 +28,7 @@ Feature: Verificar el funcionamiento de los productos destacados
       | Apple Cinema 30\\" |
       | Canon EOS 5D       |
 
-  Scenario: Validar que varios productos aleatorios se añaden al carrito
+  Scenario: Validar que varios productos aleatorios se anaden al carrito
     When anado "<num>" productos al carrito
     And hago click en el boton de carrito negro
     Then compruebo que en el carrito hay "<num>" elementos
@@ -37,7 +37,7 @@ Feature: Verificar el funcionamiento de los productos destacados
       | num |
       | 2   |
 
-  Scenario: Validar que el mismo producto se añada varias veces al carrito
+  Scenario: Validar que el mismo producto se anada varias veces al carrito
     When anado el producto "<product>" al carrito
     And anado el producto "<product>" al carrito
     And anado el producto "<product>" al carrito
@@ -49,8 +49,33 @@ Feature: Verificar el funcionamiento de los productos destacados
       | MacBook |
       | iPhone  |
 
-#  Scenario: Validar que un producto se añade a la whishlist
-#  Scenario: Validar que varios productos diferentes se añaden a la whishlist
-#  Scenario: Validar que el mismo producto se añade varias veces a la whislist
-#  Scenario: Validar que un producto se añade a la comparación de productos
-#  Scenario: Validar que todos los productos se añaden a la comparación de productos
+#  Scenario: Validar que un producto se anade a la whishlist
+#    When anado el producto "<product>" a la whislist
+#    Then compruebo que en la whislist hay "1" elementos
+#
+#    Examples:
+#      | product |
+#      | MacBook |
+#      | iPhone  |
+
+#  Scenario: Validar que varios productos aleatorios se anaden a la whishlist
+#    When anado "3" productos a la whislist
+#    Then compruebo que en la whislist hay "3" elementos
+
+#  Scenario: Validar que el mismo producto no se añade varias veces a la whislist
+#    When anado el producto "<product>" a la whislist
+#    And anado el producto "<product>" a la whislist
+#    Then compruebo que en la whislist hay "1" elemento
+
+#    Examples:
+#      | product |
+#      | MacBook |
+#      | iPhone  |
+
+#  Scenario: Validar que un producto se añade a la comparacion de productos
+#    When anadno el producto "<product>" a la comparacion de productos
+#    Then se muestra el mensaje "Success: You have added <product> to your product comparison!"
+#    Examples:
+#      | product |
+#      | MacBook |
+#      | iPhone  |
