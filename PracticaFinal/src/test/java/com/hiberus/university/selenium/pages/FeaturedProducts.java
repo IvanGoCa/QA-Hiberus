@@ -6,6 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,9 @@ public class FeaturedProducts extends BasePage {
 
     @FindBy(xpath = "//div[@id='cart']//child::ul//descendant::table[@class='table table-striped']//descendant::tr")
     private List<WebElement> productsFromBlackCart;
+
+    @FindBy(id = "cart-total")
+    private WebElement cartText;
 
     public FeaturedProducts(WebDriver driver) {
         super(driver);
@@ -45,13 +50,24 @@ public class FeaturedProducts extends BasePage {
     }
 
     public void addProductToCartByName(String productToAdd) {
+        String previousCartText = getCartText().getText();
+
         for (WebElement product : products) {
             String productName = product.findElement(By.xpath(".//descendant::h4//child::a")).getText();
 
             if (productToAdd.equals(productName)) {
                 WebElement addToCartButton = product.findElement(By.xpath(".//descendant::div[@class='button-group']" +
                         "//child::button[contains(@onclick, 'cart.add')]"));
-                click(addToCartButton);
+                addToCartButton.click();
+
+                wait.until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElementLocated(By.id("cart-total"), previousCartText)));
+
+                String newCartText = getCartText().getText();
+                if (!newCartText.equals(previousCartText)) {
+                    System.out.println("El producto se ha añadido correctamente al carrito.");
+                } else {
+                    System.out.println("Error: El producto no se añadió correctamente al carrito.");
+                }
             }
         }
     }
@@ -60,6 +76,7 @@ public class FeaturedProducts extends BasePage {
         if (null != productToAdd) {
             click(productToAdd.findElement(By.xpath(".//descendant::div[@class='button-group']" +
                     "//child::button[contains(@onclick, 'cart.add')]")));
+
         }
     }
 
@@ -86,5 +103,24 @@ public class FeaturedProducts extends BasePage {
             addProductToCartByWebElement(product);
             copy.remove(product);
         }
+    }
+
+    public Integer getAmmountAtCartOf(String productName) {
+        Integer amount = 0;
+
+        if (!getProductsFromBlackCart().isEmpty()) {
+            for (WebElement product : getProductsFromBlackCart()) {
+                WebElement link = product.findElement(By.xpath(".//td[@class='text-left']/a"));
+                String name = link.getText();
+
+                if (name.equals(productName)) {
+                    WebElement quantityCell = product.findElement(By.xpath(".//td[@class='text-right' and contains(text(), 'x')]"));
+                    amount = Integer.parseInt(quantityCell.getText().replaceAll("x ", ""));
+                    break;
+                }
+            }
+        }
+
+        return amount;
     }
 }

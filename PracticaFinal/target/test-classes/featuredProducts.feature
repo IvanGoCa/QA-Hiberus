@@ -41,13 +41,14 @@ Feature: Verificar el funcionamiento de los productos destacados
     When anado el producto "<product>" al carrito
     And anado el producto "<product>" al carrito
     And anado el producto "<product>" al carrito
-    Then compruebo que en el carrito hay "3" elementos
+    And hago click en el boton de carrito negro
+    Then compruebo que en el carrito esta el elemento "<product>" "3" veces
     
     Examples:
       | product |
       | MacBook |
-#      | iPhone  |
-  
+      | iPhone  |
+
 #  Scenario: Validar que un producto se añade a la whishlist
 #  Scenario: Validar que varios productos diferentes se añaden a la whishlist
 #  Scenario: Validar que el mismo producto se añade varias veces a la whislist

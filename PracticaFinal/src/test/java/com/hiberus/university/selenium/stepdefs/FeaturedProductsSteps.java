@@ -54,6 +54,15 @@ public class FeaturedProductsSteps {
         Assert.assertEquals("Los productos esperados en el carrito no coinciden con los actuales", expectedProductCount, actualProductCount);
     }
 
+    @Then("compruebo que en el carrito esta el elemento {string} {string} veces")
+    public void compruebo_que_en_el_carrito_esta_el_elemento_veces(String productName, String productsAtCart) {
+        init();
+        Integer expectedAmount = Integer.parseInt(productsAtCart);
+        Integer actualAmount = featuredProducts.getAmmountAtCartOf(productName);
+
+        Assert.assertEquals("La cantidad del articulo '" + productName + "' en el carrito no coincide con el esperado", expectedAmount, actualAmount);
+    }
+
     private void init(){
         PagesFactory pf = PagesFactory.getInstance();
         featuredProducts = pf.getFeaturedProducts();
