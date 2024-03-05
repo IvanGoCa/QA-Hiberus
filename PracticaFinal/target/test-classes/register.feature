@@ -22,6 +22,7 @@ Feature: Verificar la funcionalidad del registro
     Examples:
       | firstName | lastName | email                | telephone | password     |
       | Ivan      | Gomez    | ivangomcav@gmail.com | 678987789 | Boligrafo_12 |
+
 #  Scenario: Registro con simbolos en el First Name
 #  Scenario: Registro con mas de 32 caracteres en el First Name
 #  Scenario: Registro con simbolos en el Last Name
