@@ -1,7 +1,7 @@
 package com.hiberus.university.selenium.stepdefs;
 
 import com.hiberus.university.selenium.pages.CheckoutPage;
-import com.hiberus.university.selenium.pages.FeaturedProducts;
+import com.hiberus.university.selenium.pages.HomePage;
 import com.hiberus.university.selenium.pages.PagesFactory;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -43,7 +43,7 @@ public class CheckoutPageSteps {
     @Then("compruebo que el subtotal es el esperado")
     public void compruebo_que_el_subtotal_es() {
         init();
-        Float expectedPrice = FeaturedProducts.prizeWithoutTax;
+        Float expectedPrice = HomePage.prizeWithoutTax;
         Float actualPrice = checkoutPage.getSubtotalPriceFloat();
 
         Assert.assertEquals("El subtotal no corresponde con el precio esperado", expectedPrice, actualPrice);
