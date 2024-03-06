@@ -6,8 +6,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
+import java.util.Random;
 
 @Getter
 public class CartPage extends BasePage {
@@ -21,6 +23,10 @@ public class CartPage extends BasePage {
     }
 
     public Integer getProductCountFromBlackCart() {
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//div[@id='cart']//child::ul//descendant::table[@class='table table-striped']//descendant::tr"), 0));
+//        wait.until(ExpectedConditions.visibilityOfAllElements(getProductsFromBlackCart()));
+//        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//div[@id='cart']//child::ul//descendant::table[@class='table table-striped']//descendant::tr")));
+
         Integer productCount = 0;
         if (getProductsFromBlackCart().isEmpty())
             return productCount;
@@ -46,5 +52,11 @@ public class CartPage extends BasePage {
         }
 
         return amount;
+    }
+
+    public void deleteOneProductFromBlackCart() {
+        Random rand = new Random();
+        WebElement product = getProductsFromBlackCart().get(rand.nextInt(getProductCountFromBlackCart()));
+        product.findElement(By.xpath(".//td//button")).click();
     }
 }

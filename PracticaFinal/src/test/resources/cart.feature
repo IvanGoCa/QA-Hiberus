@@ -1,5 +1,8 @@
 Feature: Validar el funcionamiento del carrito
 
+  Background:
+    Given me encuentro en la pagina home
+
   Scenario: Validar que un producto de la home se anade al carrito
     When anado el producto de feature "<product>" al carrito "1" veces
     And hago click en el boton de carrito negro
@@ -9,8 +12,6 @@ Feature: Validar el funcionamiento del carrito
       | product            |
       | MacBook            |
       | iPhone             |
-      | Apple Cinema 30\\" |
-      | Canon EOS 5D       |
 
     Scenario: Validar que varios productos aleatorios de la home se anaden al carrito
       When anado "<num>" productos al carrito
@@ -30,7 +31,15 @@ Feature: Validar el funcionamiento del carrito
         | product |
         | MacBook |
         | iPhone  |
-#  Scenario: Añadir un item aleatorio desde la pantalla home
-#  Scenario: Añadir varios items al carrito desde la pantalla home
-#  Scenario: Añadir un item aleatorio desde su página
-#  Scenario: Añadir varios items al carrito desde su página
+      
+    Scenario: Validar eliminar un producto del carrito negro
+      When anado el producto de feature "<product1>" al carrito "1" veces
+      And anado el producto de feature "<product2>" al carrito "1" veces
+      And hago click en el boton de carrito negro
+      #And elimino uno de ellos
+      Then compruebo que en el carrito hay "2" elementos
+      
+      Examples:
+        | product1 | product2 |
+        | MacBook  | iPhone   |
+        #| iPhone   | MacBook  |

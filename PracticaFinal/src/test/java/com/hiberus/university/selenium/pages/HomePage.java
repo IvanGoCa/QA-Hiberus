@@ -3,12 +3,14 @@ package com.hiberus.university.selenium.pages;
 import lombok.Getter;
 import lombok.Setter;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import javax.crypto.ExemptionMechanism;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -81,36 +83,34 @@ public class HomePage extends BasePage{
     }
 
     public void addProductToCartByName(String productToAdd, Integer timesToAdd) {
-        String previousCartText = getCartText().getText();
-
         for (WebElement product : getProducts()) {
-            String productName = product.findElement(By.xpath(".//descendant::h4//child::a")).getText();
-
+            String productName = getProductName(product);
             if (productToAdd.equals(productName)) {
-                WebElement addToCartButton = product.findElement(By.xpath(".//descendant::div[@class='button-group']" +
-                        "//child::button[contains(@onclick, 'cart.add')]"));
-
-                String prizes [] = product.findElement(By.xpath(".//descendant::p[@class='price']")).getText().replaceAll("\\$", "").split("\nEx Tax: ");
-                Float prizeNoTax = Float.parseFloat(prizes[1]);
-                prizeWithoutTax += prizeNoTax;
-                System.out.println("prizeWithoutTax - - " + prizeWithoutTax);
-
-                for(int i = 0; i < timesToAdd; i++) {
-                    addToCartButton.click();
-
-                    wait.until(ExpectedConditions.and(
-                            ExpectedConditions.visibilityOfElementLocated(By.id("cart-total")),
-                            ExpectedConditions.not(ExpectedConditions.textToBe(By.id("cart-total"), previousCartText))
-                    ));
-                }
-
-                String newCartText = getCartText().getText();
-                if (!newCartText.equals(previousCartText)) {
-                    System.out.println("El producto se ha añadido correctamente al carrito.");
-                } else {
-                    System.out.println("Error: El producto no se añadió correctamente al carrito.");
-                }
+                WebElement addToCartButton = getAddToCartButton(product);
+                addProductToCart(addToCartButton, timesToAdd);
             }
+        }
+    }
+
+    private String getProductName(WebElement product) {
+        return product.findElement(By.xpath(".//descendant::h4//child::a")).getText();
+    }
+
+    private WebElement getAddToCartButton(WebElement product) {
+        return product.findElement(By.xpath(".//descendant::div[@class='button-group']" +
+                "//child::button[contains(@onclick, 'cart.add')]"));
+    }
+
+    private void addProductToCart(WebElement addToCartButton, int timesToAdd) {
+        for (int i = 0; i < timesToAdd; i++) {
+            String previousCartText = getCartText().getText();
+
+            addToCartButton.click();
+
+            wait.until(ExpectedConditions.and(
+                    ExpectedConditions.visibilityOfElementLocated(By.id("cart-total")),
+                    ExpectedConditions.not(ExpectedConditions.textToBe(By.id("cart-total"), previousCartText))
+            ));
         }
     }
 

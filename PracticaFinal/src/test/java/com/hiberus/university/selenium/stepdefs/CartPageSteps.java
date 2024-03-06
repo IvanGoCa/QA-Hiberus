@@ -3,11 +3,18 @@ package com.hiberus.university.selenium.stepdefs;
 import com.hiberus.university.selenium.pages.CartPage;
 import com.hiberus.university.selenium.pages.PagesFactory;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.junit.Assert;
 
 public class CartPageSteps {
 
     CartPage cartPage;
+
+    @When("elimino uno de ellos")
+    public void elimino_uno_de_ellos() {
+        init();
+        cartPage.deleteOneProductFromBlackCart();
+    }
 
     @Then("compruebo que en el carrito hay {string} elementos")
     public void compruebo_que_en_el_carrito_hay_elemento(String productCount) {
