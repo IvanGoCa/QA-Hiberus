@@ -1,10 +1,12 @@
 package com.hiberus.university.selenium.pages;
 
 import lombok.Getter;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
@@ -74,6 +76,9 @@ public class CheckoutPage extends BasePage {
     @FindBy(id = "button-shipping-method")
     private WebElement continueDeliveryMethodButton;
 
+    @FindBy(xpath = "//table[@class='table table-bordered table-hover']")
+    private WebElement table;
+
     @FindBy(xpath = "//table[@class='table table-bordered table-hover']//descendant::strong[text()='Sub-Total:']//parent::td//following-sibling::td")
     private WebElement subTotalPrice;
 
@@ -110,11 +115,8 @@ public class CheckoutPage extends BasePage {
             }
         }
 
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        wait.until(ExpectedConditions.elementToBeClickable(getRegionSelect()));
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//select[@id='input-payment-zone']//child::option"), 1));
         click(getRegionSelect());
 
         for (WebElement regionOption : getRegionOptions()) {
@@ -142,16 +144,9 @@ public class CheckoutPage extends BasePage {
     }
 
     public Float getSubtotalPriceFloat() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
-//        String a = getSubTotalPrice().getText().replaceAll("\\$", "");
-//        String b = getSubTotalPrice().getText();
-//        System.out.println();
-//        return null;
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//table[@class='table table-bordered table-hover']//child::tfoot//child::tr"), 1));
+
         return Float.parseFloat(getSubTotalPrice().getText().replaceAll("\\$", ""));
     }
 }

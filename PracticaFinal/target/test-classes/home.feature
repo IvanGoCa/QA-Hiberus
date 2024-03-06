@@ -15,34 +15,3 @@ Feature: Verificar el funcionamiento de los productos destacados
       | iPhone             |
       | Apple Cinema 30\\" |
       | Canon EOS 5D       |
-
-#  Scenario: Validar que un producto se anade a la whishlist
-#    When anado el producto "<product>" a la whislist
-#    Then compruebo que en la whislist hay "1" elementos
-#
-#    Examples:
-#      | product |
-#      | MacBook |
-#      | iPhone  |
-
-#  Scenario: Validar que varios productos aleatorios se anaden a la whishlist
-#    When anado "3" productos a la whislist
-#    Then compruebo que en la whislist hay "3" elementos
-
-#  Scenario: Validar que el mismo producto no se añade varias veces a la whislist
-#    When anado el producto "<product>" a la whislist
-#    And anado el producto "<product>" a la whislist
-#    Then compruebo que en la whislist hay "1" elemento
-
-#    Examples:
-#      | product |
-#      | MacBook |
-#      | iPhone  |
-
-#  Scenario: Validar que un producto se añade a la comparacion de productos
-#    When anadno el producto "<product>" a la comparacion de productos
-#    Then se muestra el mensaje "Success: You have added <product> to your product comparison!"
-#    Examples:
-#      | product |
-#      | MacBook |
-#      | iPhone  |

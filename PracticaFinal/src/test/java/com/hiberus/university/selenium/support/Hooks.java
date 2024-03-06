@@ -79,5 +79,6 @@ public class Hooks {
       scenario.attach(screenshot, "image/png", outputName);
     }
     driver.close();
+    driver.quit();
   }
 }
