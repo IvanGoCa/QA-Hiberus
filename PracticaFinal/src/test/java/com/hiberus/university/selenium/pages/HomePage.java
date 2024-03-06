@@ -21,6 +21,9 @@ public class HomePage extends BasePage{
     @FindBy(xpath = "//a[@title='My Account']//following-sibling::ul//child::li//child::a[text()='Login']")
     private WebElement loginButton;
 
+    @FindBy(xpath = "//a[@title='Checkout']")
+    private WebElement checkoutButton;
+
     //Constructor
     public HomePage(WebDriver driver) {
         super(driver);
@@ -36,5 +39,9 @@ public class HomePage extends BasePage{
     public void goToLoginPage() {
         click(getMyAccountButton());
         click(getLoginButton());
+    }
+
+    public void goToCheckoutPage() {
+        click(getCheckoutButton());
     }
 }

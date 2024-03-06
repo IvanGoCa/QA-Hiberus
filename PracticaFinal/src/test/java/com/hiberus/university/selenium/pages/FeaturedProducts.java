@@ -28,6 +28,8 @@ public class FeaturedProducts extends BasePage {
     @FindBy(id = "cart-total")
     private WebElement cartText;
 
+    public static Float prize = 0F;
+
     public FeaturedProducts(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
@@ -39,7 +41,7 @@ public class FeaturedProducts extends BasePage {
 
     public Boolean findProductByName(String expectedProductName) {
         boolean exists = Boolean.FALSE;
-        for(WebElement product : products) {
+        for(WebElement product : getProducts()) {
            String actualProductName = product.findElement(By.xpath(".//descendant::h4//child::a")).getText();
 
            if (expectedProductName.equals(actualProductName))
@@ -52,12 +54,15 @@ public class FeaturedProducts extends BasePage {
     public void addProductToCartByName(String productToAdd) {
         String previousCartText = getCartText().getText();
 
-        for (WebElement product : products) {
+        for (WebElement product : getProducts()) {
             String productName = product.findElement(By.xpath(".//descendant::h4//child::a")).getText();
 
             if (productToAdd.equals(productName)) {
                 WebElement addToCartButton = product.findElement(By.xpath(".//descendant::div[@class='button-group']" +
                         "//child::button[contains(@onclick, 'cart.add')]"));
+
+                prize += Float.parseFloat(product.findElement(By.xpath(".//descendant::p[@class='price']")).getText().replaceAll("\\$", "")
+                        .replaceAll(" Ex Tax: ", "").split("\\$")[0]);
                 addToCartButton.click();
 
                 wait.until(ExpectedConditions.not(ExpectedConditions.textToBePresentInElementLocated(By.id("cart-total"), previousCartText)));

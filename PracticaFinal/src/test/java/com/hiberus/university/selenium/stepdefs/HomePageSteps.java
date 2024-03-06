@@ -28,6 +28,12 @@ public class HomePageSteps {
         homePage.goToLoginPage();
     }
 
+    @When("hago click en el boton de checkout")
+    public void hago_click_en_el_boton_checkout() {
+        init();
+        homePage.goToCheckoutPage();
+    }
+
     private void init() {
         PagesFactory pf = PagesFactory.getInstance();
         homePage = pf.getHomePage();
