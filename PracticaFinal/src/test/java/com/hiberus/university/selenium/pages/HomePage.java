@@ -1,22 +1,19 @@
 package com.hiberus.university.selenium.pages;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.openqa.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import javax.crypto.ExemptionMechanism;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 @Getter
-public class HomePage extends BasePage{
+public class HomePage extends BasePage {
 
     public static final String PAGE_URL = "https://opencart.abstracta.us/index.php?route=common/home";
 
@@ -41,9 +38,9 @@ public class HomePage extends BasePage{
     @FindBy(id = "cart-total")
     private WebElement cartText;
 
-    public static Float prizeWithTax = 0F;
+    public static Float priceWithoutTax = 0F;
 
-    public static Float prizeWithoutTax = 0F;
+    public static Float totalPrice = 0F;
 
     //Constructor
     public HomePage(WebDriver driver) {
@@ -72,11 +69,13 @@ public class HomePage extends BasePage{
 
     public Boolean findProductByName(String expectedProductName) {
         boolean exists = Boolean.FALSE;
-        for(WebElement product : getProducts()) {
+        for (WebElement product : getProducts()) {
             String actualProductName = product.findElement(By.xpath(".//descendant::h4//child::a")).getText();
 
-            if (expectedProductName.equals(actualProductName))
+            if (expectedProductName.equals(actualProductName)) {
                 exists = Boolean.TRUE;
+                break;
+            }
         }
 
         return exists;
@@ -86,6 +85,7 @@ public class HomePage extends BasePage{
         for (WebElement product : getProducts()) {
             String productName = getProductName(product);
             if (productToAdd.equals(productName)) {
+                setPriceWithoutTax(getPriceWithoutTaxFloat(product));
                 WebElement addToCartButton = getAddToCartButton(product);
                 addProductToCart(addToCartButton, timesToAdd);
             }
@@ -94,6 +94,19 @@ public class HomePage extends BasePage{
 
     private String getProductName(WebElement product) {
         return product.findElement(By.xpath(".//descendant::h4//child::a")).getText();
+    }
+
+    private String[] getPrices(WebElement product) {
+        String p = product.findElement(By.xpath(".//descendant::p[@class='price']")).getText();
+        return product.findElement(By.xpath(".//descendant::p[@class='price']")).getText().replaceAll("\\$", "").split("\nEx Tax: ");
+
+    }
+    private Float getTotalPriceFloat(WebElement product) {
+        return Float.parseFloat(getPrices(product)[0]);
+    }
+
+    private Float getPriceWithoutTaxFloat(WebElement product) {
+        return Float.parseFloat(getPrices(product)[1]);
     }
 
     private WebElement getAddToCartButton(WebElement product) {
@@ -111,7 +124,18 @@ public class HomePage extends BasePage{
                     ExpectedConditions.visibilityOfElementLocated(By.id("cart-total")),
                     ExpectedConditions.not(ExpectedConditions.textToBe(By.id("cart-total"), previousCartText))
             ));
+
+            if (i == timesToAdd -1)
+                clickBlackCartButton();
         }
+    }
+
+    public void setTotalPrice(Float price) {
+        totalPrice += price;
+    }
+
+    public void setPriceWithoutTax(Float price) {
+        priceWithoutTax += price;
     }
 
     public void addProductToCartByWebElement(WebElement productToAdd) {
@@ -122,7 +146,11 @@ public class HomePage extends BasePage{
         }
     }
 
-    public void clickBlackCartButton(){
+    public void clickBlackCartButton() {
+        wait.until(ExpectedConditions.and(
+                ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='cart']//child::button[@class='btn btn-inverse btn-block btn-lg dropdown-toggle']")),
+                ExpectedConditions.elementToBeClickable(getBlackCartButton())
+        ));
         click(getBlackCartButton());
     }
 
@@ -130,7 +158,7 @@ public class HomePage extends BasePage{
         Random rand = new Random();
         List<WebElement> copy = new ArrayList<WebElement>(getProducts());
 
-        for(int i = 0; i < numProducts && !copy.isEmpty(); i++) {
+        for (int i = 0; i < numProducts && !copy.isEmpty(); i++) {
             int randId = rand.nextInt(copy.size());
             WebElement product = copy.get(randId);
             addProductToCartByWebElement(product);

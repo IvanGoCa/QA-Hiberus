@@ -17,6 +17,9 @@ public class CartPage extends BasePage {
     @FindBy(xpath = "//div[@id='cart']//child::ul//descendant::table[@class='table table-striped']//descendant::tr")
     private List<WebElement> productsFromBlackCart;
 
+    @FindBy(xpath = "//div[@id='cart']//child::ul//descendant::table[@class='table table-bordered']//descendant::strong[contains(text(), 'Sub-Total')]//parent::td//following-sibling::td")
+    private WebElement subTotal;
+
     CartPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
@@ -24,8 +27,6 @@ public class CartPage extends BasePage {
 
     public Integer getProductCountFromBlackCart() {
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//div[@id='cart']//child::ul//descendant::table[@class='table table-striped']//descendant::tr"), 0));
-//        wait.until(ExpectedConditions.visibilityOfAllElements(getProductsFromBlackCart()));
-//        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//div[@id='cart']//child::ul//descendant::table[@class='table table-striped']//descendant::tr")));
 
         Integer productCount = 0;
         if (getProductsFromBlackCart().isEmpty())
@@ -56,7 +57,34 @@ public class CartPage extends BasePage {
 
     public void deleteOneProductFromBlackCart() {
         Random rand = new Random();
-        WebElement product = getProductsFromBlackCart().get(rand.nextInt(getProductCountFromBlackCart()));
-        product.findElement(By.xpath(".//td//button")).click();
+        List<WebElement> products = getProductsFromBlackCart();
+        int productCount = getProductCountFromBlackCart();
+
+        if (productCount > 0) {
+            WebElement product = products.get(rand.nextInt(productCount));
+            WebElement deleteButton = product.findElement(By.xpath(".//td//button"));
+
+//            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//ul[@class='dropdown-menu pull-right']//table")));
+//
+//            wait.until(ExpectedConditions.and(
+//                    ExpectedConditions.visibilityOf(deleteButton),
+//                    ExpectedConditions.elementToBeClickable(deleteButton)
+//            ));
+
+            try {
+                Thread.sleep(1000); // 1000 milisegundos = 1 segundo
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            deleteButton.click();
+
+            try {
+                Thread.sleep(1000); // 1000 milisegundos = 1 segundo
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("No hay productos en el carrito para eliminar.");
+        }
     }
 }

@@ -4,7 +4,7 @@ Feature: Verificar la funcionalidad de la pagian de login
     Given me encuentro en la pagina home
     When hago click en el boton de login
 
-  Scenario: Introducir los datos invalidos
+  Scenario Outline: Introducir los datos invalidos
     And introduzco el email "<email>" y la contrasena "<password>"
     Then se muestra el mensaje de error "Warning: No match for E-Mail Address and/or Password."
 

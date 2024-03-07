@@ -13,7 +13,7 @@ Feature: Verificar la funcionalidad del registro
     And le doy al boton de continuar
     Then aparecen todos los mensajes de error de los inputs obligatorios
 
-  Scenario: Registro con los datos correctos
+  Scenario Outline: Registro con los datos correctos
     And realizo el registro con el firstName "<firstName>", lastName "<lastName>", email "<email>", telephone "<telephone>", password "<password>"
     And hago click en el checkbox de PrivacyPolicy
     And le doy al boton de continuar

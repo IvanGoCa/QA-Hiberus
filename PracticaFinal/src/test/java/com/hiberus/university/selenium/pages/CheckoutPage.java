@@ -14,10 +14,10 @@ import java.util.List;
 public class CheckoutPage extends BasePage {
 
     @FindBy(id = "input-email")
-    private WebElement emailInput;
+    private WebElement emailInputLogin;
 
     @FindBy(id = "input-password")
-    private WebElement passwordInput;
+    private WebElement passwordInputLogin;
 
     @FindBy(id = "button-login")
     private WebElement buttonLogin;
@@ -26,7 +26,10 @@ public class CheckoutPage extends BasePage {
     private WebElement radioButtonNewAddress;
 
     @FindBy(id = "button-payment-address")
-    private WebElement buttonContinueBillingDetail;
+    private WebElement buttonContinueBillingDetailLogged;
+
+    @FindBy(id = "button-guest")
+    private WebElement buttonContinueBillingDetailGuest;
 
     //Address inputs
     @FindBy(id = "input-payment-firstname")
@@ -34,6 +37,12 @@ public class CheckoutPage extends BasePage {
 
     @FindBy(id = "input-payment-lastname")
     private WebElement lastNameInput;
+
+    @FindBy(id = "input-payment-email")
+    private WebElement emailInput;
+
+    @FindBy(id = "input-payment-telephone")
+    private WebElement telephoneInput;
 
     @FindBy(id = "input-payment-company")
     private WebElement companyInput;
@@ -82,6 +91,18 @@ public class CheckoutPage extends BasePage {
     @FindBy(xpath = "//table[@class='table table-bordered table-hover']//descendant::strong[text()='Sub-Total:']//parent::td//following-sibling::td")
     private WebElement subTotalPrice;
 
+    @FindBy(xpath = "//input[@type='radio' and @value='guest']")
+    private WebElement radioButtonAsGuest;
+
+    @FindBy(id = "button-account")
+    private WebElement continuneButtonAccount;
+
+    @FindBy(id = "button-confirm")
+    private WebElement confirmOrderButton;
+
+    @FindBy(xpath = "//div[@id='common-success']//child::div[@class='row']//child::div[@id='content']//h1")
+    private WebElement confirmOrderMessage;
+
 
     //Constructor
     CheckoutPage(WebDriver driver) {
@@ -90,21 +111,40 @@ public class CheckoutPage extends BasePage {
     }
 
     public void doLogin(String email, String password) {
-        getEmailInput().sendKeys(email);
-        getPasswordInput().sendKeys(password);
+        getEmailInputLogin().sendKeys(email);
+        getPasswordInputLogin().sendKeys(password);
         click(getButtonLogin());
     }
 
-    public void clickContinuePaymentAddress() {
-        click(getButtonContinueBillingDetail());
+    public void clickContinuePaymentAddressLogged() {
+        click(getButtonContinueBillingDetailLogged());
     }
 
-    public void writeBillingData(String firstName, String lastName, String company, String address1, String city, String postCode, String country, String region) {
-        click(getRadioButtonNewAddress());
+    public void clickContinuePaymentAddressGuest() {
+        click(getButtonContinueBillingDetailGuest());
+    }
+
+    public void writeBillingData(String firstName, String lastName, String email, String telephone, String company,
+                                 String address1, String address2, String city, String postCode, String country, String region, Boolean radioButton) {
+
+        if (radioButton)
+            click(getRadioButtonNewAddress());
+
         getFirstNameInput().sendKeys(firstName);
         getLastNameInput().sendKeys(lastName);
+
+        if (!email.equals("null"))
+            getEmailInput().sendKeys(email);
+
+        if (!telephone.equals("null"))
+            getTelephoneInput().sendKeys(telephone);
+
         getCompanyInput().sendKeys(company);
         getAddress1Input().sendKeys(address1);
+
+        if(!address2.equals("null"))
+            getAddress2Input().sendKeys(address2);
+
         getCityInput().sendKeys(city);
         getPostCodeInput().sendKeys(postCode);
         click(getCoutrySelect());
@@ -115,8 +155,13 @@ public class CheckoutPage extends BasePage {
             }
         }
 
+        try {
+            Thread.sleep(1000); // 1000 milisegundos = 1 segundo
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         wait.until(ExpectedConditions.elementToBeClickable(getRegionSelect()));
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//select[@id='input-payment-zone']//child::option"), 1));
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//select[@id='input-payment-zone']//child::option"), 10));
         click(getRegionSelect());
 
         for (WebElement regionOption : getRegionOptions()) {
@@ -126,10 +171,22 @@ public class CheckoutPage extends BasePage {
             }
         }
 
-        clickContinuePaymentAddress();
+        if (radioButton)
+            clickContinuePaymentAddressLogged();
+        else
+            clickContinuePaymentAddressGuest();
     }
 
     public void acceptPayment() {
+        wait.until(ExpectedConditions.and(
+                ExpectedConditions.elementToBeClickable(getTermsCheckbox()),
+                ExpectedConditions.visibilityOf(getTermsCheckbox())
+        ));
+        wait.until(ExpectedConditions.and(
+                ExpectedConditions.elementToBeClickable(getContinuePaymentMethodButton()),
+                ExpectedConditions.visibilityOf(getContinuePaymentMethodButton())
+        ));
+
         click(getTermsCheckbox());
         click(getContinuePaymentMethodButton());
         System.out.println("");
@@ -144,9 +201,35 @@ public class CheckoutPage extends BasePage {
     }
 
     public Float getSubtotalPriceFloat() {
-
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@class='table table-bordered table-hover']")));
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//table[@class='table table-bordered table-hover']//child::tfoot//child::tr"), 1));
 
+//        try {
+//            Thread.sleep(500); // 1000 milisegundos = 1 segundo
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
         return Float.parseFloat(getSubTotalPrice().getText().replaceAll("\\$", ""));
+    }
+
+    public void clickDoCkeckoutAsGuest() {
+        wait.until(ExpectedConditions.visibilityOf(getRadioButtonAsGuest()));
+        click(getRadioButtonAsGuest());
+        click(getContinuneButtonAccount());
+    }
+
+    public void clickConfirmOrder() {
+        wait.until(ExpectedConditions.and(
+                ExpectedConditions.visibilityOf(getConfirmOrderButton()),
+                ExpectedConditions.elementToBeClickable(getConfirmOrderButton())
+        ));
+
+        click(getConfirmOrderButton());
+    }
+
+    public String getConfirmOrderMessageText() {
+        wait.until(ExpectedConditions.visibilityOf(getConfirmOrderMessage()));
+        return getConfirmOrderMessage().getText();
     }
 }

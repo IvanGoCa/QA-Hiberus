@@ -42,12 +42,6 @@ public class HomePageSteps {
         homePage.addProductToCartByName(productNameToClick, Integer.parseInt(timesToAdd));
     }
 
-    @When("hago click en el boton de carrito negro")
-    public void hago_click_en_el_boton_de_carrito_negro() {
-        init();
-        homePage.clickBlackCartButton();
-    }
-
     @When("anado {string} productos al carrito")
     public void anado_productos_al_carrito(String products) {
         init();
