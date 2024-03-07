@@ -26,6 +26,8 @@ public class CartPage extends BasePage {
     }
 
     public Integer getProductCountFromBlackCart() {
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//ul[@class='dropdown-menu pull-right']//table")));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//div[@id='cart']//child::ul//descendant::table[@class='table table-striped']//descendant::tr")));
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//div[@id='cart']//child::ul//descendant::table[@class='table table-striped']//descendant::tr"), 0));
 
         Integer productCount = 0;
@@ -56,6 +58,12 @@ public class CartPage extends BasePage {
     }
 
     public void deleteOneProductFromBlackCart() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//ul[@class='dropdown-menu pull-right']")));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//ul[@class='dropdown-menu pull-right']//table")));
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//div[@id='cart']//child::ul//descendant::table[@class='table table-striped']//descendant::tr")));
+        wait.until(ExpectedConditions.visibilityOfAllElements(getProductsFromBlackCart()));
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//div[@id='cart']//child::ul//descendant::table[@class='table table-striped']//descendant::tr//child::td[@class='text-center']//child::button[contains(@onclick, 'cart.remove')]")));
+
         Random rand = new Random();
         List<WebElement> products = getProductsFromBlackCart();
         int productCount = getProductCountFromBlackCart();
@@ -64,22 +72,12 @@ public class CartPage extends BasePage {
             WebElement product = products.get(rand.nextInt(productCount));
             WebElement deleteButton = product.findElement(By.xpath(".//td//button"));
 
-//            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//ul[@class='dropdown-menu pull-right']//table")));
-//
-//            wait.until(ExpectedConditions.and(
-//                    ExpectedConditions.visibilityOf(deleteButton),
-//                    ExpectedConditions.elementToBeClickable(deleteButton)
-//            ));
-
-            try {
-                Thread.sleep(1000); // 1000 milisegundos = 1 segundo
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            wait.until(ExpectedConditions.visibilityOf(deleteButton));
+            wait.until(ExpectedConditions.elementToBeClickable(deleteButton));
             deleteButton.click();
 
             try {
-                Thread.sleep(1000); // 1000 milisegundos = 1 segundo
+                Thread.sleep(350);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

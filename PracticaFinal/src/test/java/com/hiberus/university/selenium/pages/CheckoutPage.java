@@ -156,7 +156,7 @@ public class CheckoutPage extends BasePage {
         }
 
         try {
-            Thread.sleep(1000); // 1000 milisegundos = 1 segundo
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -203,12 +203,7 @@ public class CheckoutPage extends BasePage {
     public Float getSubtotalPriceFloat() {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@class='table table-bordered table-hover']")));
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//table[@class='table table-bordered table-hover']//child::tfoot//child::tr"), 1));
-
-//        try {
-//            Thread.sleep(500); // 1000 milisegundos = 1 segundo
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        wait.until(ExpectedConditions.visibilityOf(getSubTotalPrice()));
 
         return Float.parseFloat(getSubTotalPrice().getText().replaceAll("\\$", ""));
     }

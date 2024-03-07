@@ -7,7 +7,7 @@ Feature: Verificar la funcionalidad de la pagian de login
   Scenario Outline: Introducir los datos invalidos
     And introduzco el email "<email>" y la contrasena "<password>"
     Then se muestra el mensaje de error "Warning: No match for E-Mail Address and/or Password."
-
+    
     Examples:
       | email                | password     |
       | ivangomcav.com       | Boligrafo_12 |

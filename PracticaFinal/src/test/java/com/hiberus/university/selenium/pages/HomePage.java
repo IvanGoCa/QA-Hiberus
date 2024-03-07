@@ -125,6 +125,12 @@ public class HomePage extends BasePage {
                     ExpectedConditions.not(ExpectedConditions.textToBe(By.id("cart-total"), previousCartText))
             ));
 
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
             if (i == timesToAdd -1)
                 clickBlackCartButton();
         }
@@ -147,10 +153,9 @@ public class HomePage extends BasePage {
     }
 
     public void clickBlackCartButton() {
-        wait.until(ExpectedConditions.and(
-                ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='cart']//child::button[@class='btn btn-inverse btn-block btn-lg dropdown-toggle']")),
-                ExpectedConditions.elementToBeClickable(getBlackCartButton())
-        ));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("cart")));
+        wait.until(ExpectedConditions.visibilityOf(getBlackCartButton()));
+        wait.until(ExpectedConditions.elementToBeClickable(getBlackCartButton()));
         click(getBlackCartButton());
     }
 

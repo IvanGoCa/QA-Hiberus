@@ -28,7 +28,5 @@ Feature: Verificar checkout
       | product |
       | MacBook |
 
-    # And hago click en el boton de continuar en el delivery details
-    # And hago click en el boton de continuar en el delivery method
-    # And hago click en confirm order
-    # Then se muestra un mensaje de pedido realizado "Your order has been placed!"
+
+#  Scenario Outline: Validar que el pedido de un producto se añade al apartado order history

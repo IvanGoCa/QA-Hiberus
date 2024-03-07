@@ -16,6 +16,8 @@ public class HomePageSteps {
     public void me_encuentro_en_la_pagina_home() {
         init();
         homePage.navigateTo(HomePage.PAGE_URL);
+        HomePage.totalPrice = 0F;
+        HomePage.priceWithoutTax = 0F;
     }
 
     @When("hago click en el boton de registro")
@@ -46,6 +48,12 @@ public class HomePageSteps {
     public void anado_productos_al_carrito(String products) {
         init();
         homePage.addRandomProductsToCart(Integer.parseInt(products));
+    }
+
+    @When("hago click en el boton de carrito negro")
+    public void hago_click_en_el_boton_de_carrito_negro(){
+        init();
+        homePage.clickBlackCartButton();
     }
 
     @Then("en el apartado featured hay {string} productos")
